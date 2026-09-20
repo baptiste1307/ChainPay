@@ -62,7 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) throw new Error("Failed to fetch payments");
       const payments = await res.json();
 
-      if (statPaymentsCountEl) statPaymentsCountEl.textContent = payments.length;
+      if (statPaymentsCountEl)
+        statPaymentsCountEl.textContent = payments.length;
 
       if (!payments || payments.length === 0) {
         paymentsTableBody.innerHTML = `
