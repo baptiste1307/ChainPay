@@ -16,7 +16,6 @@
   <a href="#-who-is-chainpay-for">Use Cases</a>
 </p>
 
-
 <p align="center">
   <a href="https://chainpay-xhl0.onrender.com" target="_blank">
     <img src="https://img.shields.io/badge/🚀_Live_Demo-chainpay--xhl0.onrender.com-00DC82?style=for-the-badge&logo=render&logoColor=white" alt="Live Demo on Render" />
@@ -32,6 +31,9 @@
 </p>
 
 ---
+
+> [!NOTE]
+> **Testnet Demonstration**: By default, this live deployment and repository operate on the **Ethereum Sepolia Testnet** using free test tokens. No real funds or real currency are involved or required.
 
 ## ⚡ Key Features & Technical Highlights
 

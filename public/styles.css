@@ -217,6 +217,34 @@ body {
   line-height: 1.6;
 }
 
+/* Testnet Banner */
+.testnet-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  margin: 24px auto 32px;
+  max-width: 780px;
+  font-size: 13.5px;
+  color: #fde68a;
+  backdrop-filter: blur(12px);
+  line-height: 1.5;
+}
+
+.pulse-dot-amber {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  background: #f59e0b;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #f59e0b;
+  animation: pulseAnimation 2s infinite ease-in-out;
+}
+
 /* Dashboard Grid */
 .dashboard-grid {
   display: grid;

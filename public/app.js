@@ -138,6 +138,52 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   });
 
+  const SEPOLIA_CHAIN_ID = "0xaa36a7"; // 11155111
+
+  // Ensure user is on Sepolia testnet to prevent real money loss
+  async function ensureSepoliaNetwork() {
+    if (typeof window.ethereum === "undefined") return false;
+    try {
+      const currentChainId = await window.ethereum.request({
+        method: "eth_chainId",
+      });
+      if (currentChainId !== SEPOLIA_CHAIN_ID) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ chainId: SEPOLIA_CHAIN_ID }],
+          });
+          return true;
+        } catch (switchError) {
+          if (switchError.code === 4902) {
+            await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [
+                {
+                  chainId: SEPOLIA_CHAIN_ID,
+                  chainName: "Sepolia Test Network",
+                  nativeCurrency: {
+                    name: "Sepolia ETH",
+                    symbol: "ETH",
+                    decimals: 18,
+                  },
+                  rpcUrls: ["https://rpc.sepolia.org"],
+                  blockExplorerUrls: ["https://sepolia.etherscan.io"],
+                },
+              ],
+            });
+            return true;
+          }
+          throw switchError;
+        }
+      }
+      return true;
+    } catch (err) {
+      console.warn("Network switch refused:", err);
+      return false;
+    }
+  }
+
   // 5. Connect MetaMask
   async function connectWallet() {
     if (typeof window.ethereum === "undefined") {
@@ -145,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     try {
+      await ensureSepoliaNetwork();
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
@@ -171,6 +218,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
+      const isSepolia = await ensureSepoliaNetwork();
+      if (!isSepolia) {
+        sendFeedback.className = "alert-box alert-error";
+        sendFeedback.textContent =
+          "Please switch your wallet to Sepolia Testnet to make test transactions safely.";
+        sendFeedback.classList.remove("hidden");
+        return;
+      }
+
       if (!userWalletAddress) {
         await connectWallet();
       }
