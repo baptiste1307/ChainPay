@@ -1,0 +1,34 @@
+{
+  "name": "chainpay",
+  "version": "1.0.0",
+  "description": "Lightweight EVM crypto payment gateway and transaction verification API built with Node.js, Express, and Ethers.js v6.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "check-balance": "node scripts/checkBalance.js",
+    "send-payment": "node scripts/sendPayment.js",
+    "test": "echo \"No unit tests specified yet\" && exit 0"
+  },
+  "keywords": [
+    "ethereum",
+    "evm",
+    "crypto-payments",
+    "ethers-js",
+    "web3",
+    "payment-gateway",
+    "sepolia",
+    "blockchain",
+    "express"
+  ],
+  "author": "baptiste1307",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.3.1",
+    "ethers": "^6.16.0",
+    "express": "^5.2.1"
+  }
+}

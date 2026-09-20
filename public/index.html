@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChainPay — EVM Payment Gateway</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="bg-glow"></div>
+
+    <!-- Floating Header (Minimalist Nala / Oryo style) -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="/" class="brand-link">
+          <img src="/assets/logo.svg" alt="ChainPay" class="brand-logo" />
+        </a>
+
+        <div class="header-actions">
+          <div class="network-badge" id="networkBadge">
+            <span class="pulse-dot"></span>
+            <span id="networkName">Sepolia</span>
+          </div>
+          <button id="btnConnectWallet" class="btn btn-secondary btn-sm">
+            <span id="walletBtnText">Connect Wallet</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Minimalist Container -->
+    <main class="main-content">
+      <!-- Hero Section (Clean & Minimalist) -->
+      <section class="hero-section">
+        <h1 class="hero-title">
+          Accept and verify <br />
+          <span class="gradient-text">crypto payments on-chain.</span>
+        </h1>
+        <p class="hero-subtitle">
+          Direct wallet-to-wallet settlement with automated EVM transaction
+          verification. Zero intermediaries, zero processing fees.
+        </p>
+      </section>
+
+      <!-- Testnet Disclaimer Banner -->
+      <div class="testnet-banner">
+        <span class="pulse-dot-amber"></span>
+        <div>
+          <strong>Testnet Demo Mode:</strong> Connected to
+          <strong>Ethereum Sepolia</strong>. All transactions use free testnet
+          tokens with zero monetary value. No real funds are involved.
+        </div>
+      </div>
+
+      <!-- Core Interactive Cards -->
+      <section class="dashboard-grid">
+        <!-- Card 1: Initiate Payment -->
+        <div class="glass-card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Send Payment</h2>
+              <p class="card-desc">
+                Transfer testnet ETH to the merchant address
+              </p>
+            </div>
+          </div>
+
+          <form id="paymentForm" class="card-body">
+            <div class="form-group">
+              <label class="form-label" for="merchantAddress"
+                >Merchant Address</label
+              >
+              <div class="input-with-action">
+                <input
+                  type="text"
+                  id="merchantAddress"
+                  class="form-input font-mono"
+                  readonly
+                />
+                <button
+                  type="button"
+                  id="btnCopyMerchant"
+                  class="btn-input-action"
+                  title="Copy Address"
+                >
+                  <svg
+                    class="icon-sm"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <rect
+                      x="9"
+                      y="9"
+                      width="13"
+                      height="13"
+                      rx="2"
+                      ry="2"
+                    ></rect>
+                    <path
+                      d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Amount (ETH)</label>
+              <div class="amount-presets">
+                <button
+                  type="button"
+                  class="btn-preset active"
+                  data-amount="0.00001"
+                >
+                  0.00001
+                </button>
+                <button type="button" class="btn-preset" data-amount="0.0001">
+                  0.0001
+                </button>
+                <button type="button" class="btn-preset" data-amount="0.001">
+                  0.001
+                </button>
+              </div>
+              <input
+                type="number"
+                id="payAmount"
+                class="form-input font-mono mt-2"
+                step="0.000001"
+                min="0.000001"
+                value="0.00001"
+              />
+            </div>
+
+            <button
+              type="button"
+              id="btnSendWeb3"
+              class="btn btn-primary btn-block"
+            >
+              <span id="btnSendText">Pay with MetaMask</span>
+            </button>
+
+            <div id="sendFeedback" class="alert-box hidden"></div>
+          </form>
+        </div>
+
+        <!-- Card 2: On-Chain Verifier -->
+        <div class="glass-card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Verify Transaction</h2>
+              <p class="card-desc">
+                Check any transaction hash against the blockchain
+              </p>
+            </div>
+          </div>
+
+          <form id="verifyForm" class="card-body">
+            <div class="form-group">
+              <label class="form-label" for="verifyTxHash"
+                >Transaction Hash (txHash)</label
+              >
+              <input
+                type="text"
+                id="verifyTxHash"
+                class="form-input font-mono"
+                placeholder="0x..."
+                required
+              />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label class="form-label" for="verifyAmount"
+                  >Amount (ETH)</label
+                >
+                <input
+                  type="number"
+                  id="verifyAmount"
+                  class="form-input font-mono"
+                  step="any"
+                  value="0.00001"
+                  required
+                />
+              </div>
+              <div class="form-group flex-1">
+                <label class="form-label" for="verifyTo">Recipient</label>
+                <input
+                  type="text"
+                  id="verifyTo"
+                  class="form-input font-mono"
+                  required
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              id="btnVerify"
+              class="btn btn-secondary btn-block"
+            >
+              <span id="verifySpinner" class="spinner hidden"></span>
+              <span id="verifyBtnText">Verify On-Chain</span>
+            </button>
+
+            <div id="verifyFeedback" class="alert-box hidden"></div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Confirmed Payments Ledger -->
+      <section class="ledger-section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Settled Transactions</h2>
+            <p class="section-subtitle">
+              Real-time ledger of verified on-chain payments
+            </p>
+          </div>
+          <button id="btnRefreshLedger" class="btn btn-ghost btn-sm">
+            Refresh
+          </button>
+        </div>
+
+        <div class="table-container">
+          <table class="ledger-table">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Tx Hash</th>
+                <th>From</th>
+                <th>Block</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody id="paymentsTableBody">
+              <tr class="table-empty-row">
+                <td colspan="6">Loading settled payments...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Developer Quickstart -->
+      <section id="api-docs" class="api-section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Developer Integration</h2>
+            <p class="section-subtitle">
+              Query verification with a single HTTP call
+            </p>
+          </div>
+        </div>
+
+        <div class="code-card">
+          <div class="code-header">
+            <div class="code-tabs">
+              <button class="code-tab active" data-lang="curl">cURL</button>
+              <button class="code-tab" data-lang="js">JavaScript</button>
+              <button class="code-tab" data-lang="py">Python</button>
+            </div>
+            <button id="btnCopyCode" class="btn-copy">Copy Snippet</button>
+          </div>
+          <pre
+            class="code-pre"
+          ><code id="codeSnippet" class="font-mono">curl -X POST http://localhost:3001/api/tx \
+  -H "Content-Type: application/json" \
+  -d '{
+    "txHash": "0xabc...",
+    "amount": 0.00001,
+    "to": "0x445Aaae218d736acD1658c31B09Fe0263f466965"
+  }'</code></pre>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <span class="footer-brand">ChainPay</span>
+          <span class="footer-copy"
+            >© 2026 baptiste1307. Distributed under the MIT License.</span
+          >
+        </div>
+        <div class="footer-links">
+          <a
+            href="https://github.com/baptiste1307/ChainPay"
+            target="_blank"
+            rel="noreferrer"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 50" fill="none">
+  <defs>
+    <linearGradient id="chain-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#0EA5E9" />
+    </linearGradient>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Wordmark Logo: Pure stylized typography without any dots or symbols -->
+  <g transform="translate(4, 37)">
+    <text font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', 'Inter', sans-serif"
+          font-weight="800"
+          font-size="34"
+          letter-spacing="-0.04em">
+      <tspan fill="url(#chain-blue)" filter="url(#soft-glow)">Chain</tspan>
+      <tspan dx="2" fill="#FFFFFF" font-weight="700">Pay</tspan>
+    </text>
+  </g>
+</svg>
