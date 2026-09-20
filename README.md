@@ -7,13 +7,13 @@
 </p>
 
 <p align="center">
-  <a href="#-key-features--technical-highlights">Features & Tech</a> •
+  <a href="#-explain-like-im-5-eli5">Beginners (ELI5)</a> •
   <a href="#-prerequisites">Prerequisites</a> •
   <a href="#-quick-start-local">Quick Start</a> •
   <a href="#-deploy-online-in-3-minutes-free">Deploy Online</a> •
-  <a href="#%EF%B8%8F-web-dashboard-tour">Web Dashboard</a> •
+  <a href="#%EF%B8%8F-deep-dive-for-developers">For Developers</a> •
   <a href="#-api-reference">API Docs</a> •
-  <a href="#-who-is-chainpay-for">Use Cases</a>
+  <a href="#-why-chainpay-who-is-this-for">Why ChainPay?</a>
 </p>
 
 <p align="center">
@@ -38,31 +38,28 @@
 
 ---
 
-## ⚡ Key Features & Technical Highlights
+## 💡 Explain Like I'm 5 (ELI5)
 
-ChainPay is an open-source, non-custodial payment gateway engineered for Ethereum and EVM-compatible networks (Base, Polygon, Arbitrum, Optimism).
+### The Problem With Traditional Online Payments
 
-```text
-Payment & Verification Architecture:
-[Client / MetaMask Wallet]
-         │
-         ▼  (1) Broadcast signed tx (eth_sendTransaction)
-[EVM Blockchain] ◄────── (2) Mined into block (e.g. Block #5839210)
-         ▲
-         │  (4) Query JSON-RPC (eth_getTransactionByHash + eth_getTransactionReceipt)
-[ChainPay Backend] ◄────── (3) POST /api/tx { txHash, amount, to }
-         │
-         ▼
-[Settled Ledger] ──────► (5) HTTP 200 { status: "confirmed" }
-```
+When you buy something online with a credit card or services like PayPal, Stripe, or Coinbase Commerce:
 
-- **Zero-Fee Non-Custodial Transfers**: Direct peer-to-peer settlement from customer wallet to merchant wallet. Zero gateway percentage cuts, zero chargeback risks, and no third-party custodial fund holding.
-- **Direct On-Chain Verification (`POST /api/tx`)**: Queries raw EVM JSON-RPC state rather than trusting third-party webhooks, independently confirming sender, recipient, and amount.
-- **Lossless BigInt Wei Arithmetic**: All payment values are parsed and evaluated using native 256-bit `BigInt` Wei ($10^{18}$) via `ethers.parseEther`, eliminating JavaScript IEEE-754 floating-point rounding vulnerabilities.
-- **EIP-55 Checksum Normalization**: Automatic address casing resolution through `ethers.getAddress` prevents checksum spoofing and case-sensitive comparison bugs.
-- **Reorg & Revert Protection**: Enforces mined block inclusion via `provider.waitForTransaction()` and validates EVM receipt execution status (`receipt.status === 1`) before settling orders.
-- **Deep Module Architecture**: Blockchain polling, retry intervals, and hex conversions are encapsulated inside a cohesive `PaymentService` (`src/services/paymentService.js`), keeping routes and controllers featherweight.
-- **Turnkey Web3 Dashboard**: Out-of-the-box dark-themed UI served on `/` featuring 1-click MetaMask checkout, real-time block height polling, and a live settled payments ledger.
+1. **Middlemen take a cut**: Usually 1.5% to 3% + fixed fees per transaction.
+2. **Account risk**: Intermediaries can freeze your funds, block your account, or charge back payments without notice.
+3. **Bureaucracy**: You must submit IDs, company papers, and wait days for KYC approval.
+
+### How ChainPay Solves This
+
+Imagine handing physical cash directly to a store cashier: **no middlemen, zero commission, and nobody can stop or reverse the exchange**.
+
+**ChainPay brings that same peer-to-peer simplicity to the internet using blockchain technology:**
+
+- **Direct P2P**: The buyer sends cryptocurrency straight from their personal wallet (e.g. MetaMask) into your personal wallet.
+- **Automatic Truth-Checking**: ChainPay doesn't hold your money. Instead, it acts like an automated auditor: it checks the public blockchain ledger in real-time to answer:
+  - _“Did the customer actually send the crypto?”_
+  - _“Was it sent to the right merchant wallet?”_
+  - _“Was the exact expected amount delivered?”_
+- **Instant Order Fulfillment**: As soon as the blockchain confirms the transaction, ChainPay validates the order in 1 second.
 
 ---
 
@@ -162,7 +159,51 @@ When navigating to the dashboard, users and merchants have access to:
 
 ---
 
-> 📖 *For full design rationale on Deep Modules, error design, and classitis prevention, see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).*
+## 🛠️ Deep-Dive for Developers
+
+ChainPay is built adhering to the principles in John Ousterhout’s _A Philosophy of Software Design_ (2nd Edition):
+
+```text
+Payment Flow Architecture:
+[User / Web3 Wallet]
+         │
+         ▼  (1) Broadcast signed tx (eth_sendTransaction)
+[EVM Blockchain] ◄────── (2) Mined into block (Block #5839210)
+         ▲
+         │  (4) Verify on-chain via JSON-RPC (eth_getTransactionByHash + Receipt)
+[ChainPay Backend] ◄────── (3) POST /api/tx { txHash, amount, to }
+         │
+         ▼
+[Payment Ledger] ──────► (5) HTTP 200 { status: "confirmed" }
+```
+
+### 1. Deep Module Architecture (`PaymentService`)
+
+All RPC communication, hex parsing, block polling, and mathematical validations are encapsulated inside `src/services/paymentService.js`. The HTTP controllers and UI remain featherweight and completely decoupled from blockchain intricacies.
+
+### 2. Lossless BigInt Wei Arithmetic
+
+Floating-point mathematics in standard JavaScript (`0.1 + 0.2 !== 0.3`) causes severe financial vulnerabilities. ChainPay avoids float math completely:
+
+- Inputs are parsed to fundamental atomic units (**Wei**, $10^{18}$) via `ethers.parseEther`.
+- Comparisons use native 256-bit `BigInt`:
+  ```javascript
+  const expectedWei = ethers.parseEther(amount.toString());
+  if (tx.value < expectedWei) {
+    return { success: false, message: "Insufficient payment amount." };
+  }
+  ```
+
+### 3. EIP-55 Address Checksum Normalization
+
+Ethereum addresses can be formatted in lower case, uppercase, or mixed-case checksums. ChainPay passes all addresses through `ethers.getAddress` prior to comparison, preventing address spoofing and casing mismatch bugs.
+
+### 4. Reorg & Double-Spending Protection
+
+A transaction in the mempool can be cancelled or speed-run. `PaymentService` leverages `provider.waitForTransaction(txHash, confirmations)` to guarantee:
+
+- The transaction has been included in a finalized block.
+- The EVM execution receipt status is strictly `1` (Success), preventing reverted calls from registering as valid payments.
 
 ---
 
