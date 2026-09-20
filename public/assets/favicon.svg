@@ -1,17 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <linearGradient id="fav-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="100%" stop-color="#94A3B8" />
-    </linearGradient>
-    <linearGradient id="fav-accent" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="fav-blue" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#38BDF8" />
-      <stop offset="100%" stop-color="#818CF8" />
+      <stop offset="100%" stop-color="#0EA5E9" />
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="16" fill="#0A0A0F" />
-  <rect x="8" y="8" width="48" height="48" rx="12" stroke="url(#fav-grad)" stroke-width="2.5" fill="none" opacity="0.8" />
-  <path d="M20 32 H34 M30 22 L40 32 L30 42" stroke="url(#fav-grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-  <circle cx="20" cy="32" r="4" fill="url(#fav-accent)" />
-  <circle cx="42" cy="32" r="2.5" fill="#FFFFFF" />
+  <rect width="64" height="64" rx="18" fill="#050507" />
+  <text x="50%" y="62%" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', 'Inter', sans-serif" font-weight="800" font-size="28" letter-spacing="-0.06em" text-anchor="middle">
+    <tspan fill="url(#fav-blue)">C</tspan><tspan fill="#FFFFFF">P</tspan>
+  </text>
+  <circle cx="48" cy="18" r="3" fill="#38BDF8" />
 </svg>
