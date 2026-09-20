@@ -101,7 +101,7 @@ When the server is running, navigating to `http://localhost:3001` launches the *
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/baptiste1307/ChainPay.git chainpay
+git clone https://github.com/baptiste1307/Crypto_Payment_Integration.git chainpay
 cd chainpay
 npm install
 ```

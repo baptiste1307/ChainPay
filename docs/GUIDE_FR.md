@@ -62,7 +62,7 @@ Pour tester ChainPay, vous n'avez besoin d'aucun argent réel ! Tout fonctionne 
 ### 1. Télécharger le projet
 Ouvrez votre terminal et lancez :
 ```bash
-git clone https://github.com/baptiste1307/ChainPay.git chainpay
+git clone https://github.com/baptiste1307/Crypto_Payment_Integration.git chainpay
 cd chainpay
 npm install
 ```
