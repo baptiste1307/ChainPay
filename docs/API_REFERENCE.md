@@ -6,20 +6,23 @@ CORS is enabled by default across all origins.
 ---
 
 ## Base URLs
-* Local: `http://localhost:3001`
-* Production: `https://your-domain.onrender.com`
+
+- Local: `http://localhost:3001`
+- Production: `https://your-domain.onrender.com`
 
 ---
 
 ## Endpoints
 
 ### 1. Health & Node Status
+
 Returns the operational status of the service, current blockchain block height, and network details.
 
-* **Method**: `GET`
-* **Route**: `/api/health` *(alias: `/health`)*
+- **Method**: `GET`
+- **Route**: `/api/health` _(alias: `/health`)_
 
 #### Success Response (`200 OK`)
+
 ```json
 {
   "status": "healthy",
@@ -33,12 +36,14 @@ Returns the operational status of the service, current blockchain block height, 
 ---
 
 ### 2. Verify On-Chain Transaction
+
 Validates that a given transaction hash has been broadcasted, targets the expected recipient address, meets or exceeds the required amount, and has been included in a mined block.
 
-* **Method**: `POST`
-* **Route**: `/api/tx` *(alias: `/tx`)*
+- **Method**: `POST`
+- **Route**: `/api/tx` _(alias: `/tx`)_
 
 #### Request Body
+
 ```json
 {
   "txHash": "0x5a2d8f9b7c3e1a4d8f9b7c3e1a4d8f9b7c3e1a4d8f9b7c3e1a4d8f9b7c3e1a4d",
@@ -47,13 +52,14 @@ Validates that a given transaction hash has been broadcasted, targets the expect
 }
 ```
 
-| Field | Type | Description |
-| :--- | :--- | :--- |
-| `txHash` | `string` | 66-character 0x-prefixed EVM transaction hash. |
-| `amount` | `number \| string` | Expected value in ETH. |
-| `to` | `string` | Expected recipient address. Case-insensitive (normalized with EIP-55 checksum). |
+| Field    | Type               | Description                                                                     |
+| :------- | :----------------- | :------------------------------------------------------------------------------ |
+| `txHash` | `string`           | 66-character 0x-prefixed EVM transaction hash.                                  |
+| `amount` | `number \| string` | Expected value in ETH.                                                          |
+| `to`     | `string`           | Expected recipient address. Case-insensitive (normalized with EIP-55 checksum). |
 
 #### Success Response (`200 OK`)
+
 ```json
 {
   "status": "confirmed",
@@ -72,6 +78,7 @@ Validates that a given transaction hash has been broadcasted, targets the expect
 ```
 
 #### Rejection Response (`400 Bad Request`)
+
 ```json
 {
   "status": "rejected",
@@ -82,12 +89,14 @@ Validates that a given transaction hash has been broadcasted, targets the expect
 ---
 
 ### 3. List Confirmed Payments
+
 Retrieves all settled payments recorded during the current service lifecycle.
 
-* **Method**: `GET`
-* **Route**: `/api/payments` *(alias: `/payments`)*
+- **Method**: `GET`
+- **Route**: `/api/payments` _(alias: `/payments`)_
 
 #### Success Response (`200 OK`)
+
 ```json
 [
   {

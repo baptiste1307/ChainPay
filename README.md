@@ -39,12 +39,12 @@ It eliminates the need for expensive third-party payment gateways by verifying p
 
 ## 🚀 Key Features
 
-* **Direct On-Chain Settlement (`POST /api/tx`)**: Queries raw JSON-RPC state to verify transaction existence, status, block inclusion, and actual Wei transferred.
-* **Checksum & Amount Validation**: Robust address matching (via `ethers.getAddress`) and floating-point safe comparison using native `BigInt` Wei.
-* **Block Confirmations Waiting**: Prevents double-spending by awaiting inclusion in mined blocks (`waitForTransaction`).
-* **Settled Payments Ledger (`GET /api/payments`)**: In-memory payment ledger tracking verified orders, timestamps, sender addresses, and block numbers.
-* **Modern Web3 GUI**: Single-page application served out-of-the-box on `/` featuring a live network pulse, MetaMask integration, and transaction inspector.
-* **CLI Testing Tools**: Ready-to-use scripts to check balances (`npm run check-balance`) and broadcast testnet payments (`npm run send-payment`).
+- **Direct On-Chain Settlement (`POST /api/tx`)**: Queries raw JSON-RPC state to verify transaction existence, status, block inclusion, and actual Wei transferred.
+- **Checksum & Amount Validation**: Robust address matching (via `ethers.getAddress`) and floating-point safe comparison using native `BigInt` Wei.
+- **Block Confirmations Waiting**: Prevents double-spending by awaiting inclusion in mined blocks (`waitForTransaction`).
+- **Settled Payments Ledger (`GET /api/payments`)**: In-memory payment ledger tracking verified orders, timestamps, sender addresses, and block numbers.
+- **Modern Web3 GUI**: Single-page application served out-of-the-box on `/` featuring a live network pulse, MetaMask integration, and transaction inspector.
+- **CLI Testing Tools**: Ready-to-use scripts to check balances (`npm run check-balance`) and broadcast testnet payments (`npm run send-payment`).
 
 ---
 
@@ -62,6 +62,7 @@ When the server is running, navigating to `http://localhost:3001` launches the *
 ## 🚦 Quick Start
 
 ### 1. Clone & Install
+
 ```bash
 git clone https://github.com/baptiste1307/Crypto_Payment_Integration.git chainpay
 cd chainpay
@@ -69,12 +70,15 @@ npm install
 ```
 
 ### 2. Environment Configuration
+
 Copy the template configuration:
+
 ```bash
 cp .env.example .env
 ```
 
 Edit your `.env` file:
+
 ```env
 # Alchemy, Infura, or any EVM RPC endpoint (Sepolia testnet recommended)
 RPC_URL="https://eth-sepolia.g.alchemy.com/v2/YOUR_API_KEY"
@@ -90,6 +94,7 @@ PORT=3001
 ```
 
 ### 3. Start the Server
+
 ```bash
 # Production mode
 npm start
@@ -105,11 +110,13 @@ Open [http://localhost:3001](http://localhost:3001) in your browser!
 ## 📡 API Reference
 
 ### 1. Verify Payment
-* **URL**: `/api/tx` *(or `/tx`)*
-* **Method**: `POST`
-* **Content-Type**: `application/json`
+
+- **URL**: `/api/tx` _(or `/tx`)_
+- **Method**: `POST`
+- **Content-Type**: `application/json`
 
 **Request Body:**
+
 ```json
 {
   "txHash": "0x5a2d8f9b...",
@@ -119,6 +126,7 @@ Open [http://localhost:3001](http://localhost:3001) in your browser!
 ```
 
 **Successful Response (`200 OK`):**
+
 ```json
 {
   "status": "confirmed",
@@ -137,6 +145,7 @@ Open [http://localhost:3001](http://localhost:3001) in your browser!
 ```
 
 **Rejection Response (`400 Bad Request`):**
+
 ```json
 {
   "status": "rejected",
@@ -147,10 +156,12 @@ Open [http://localhost:3001](http://localhost:3001) in your browser!
 ---
 
 ### 2. Get Settled Payments
-* **URL**: `/api/payments` *(or `/payments`)*
-* **Method**: `GET`
+
+- **URL**: `/api/payments` _(or `/payments`)_
+- **Method**: `GET`
 
 **Response (`200 OK`):**
+
 ```json
 [
   {
@@ -168,10 +179,12 @@ Open [http://localhost:3001](http://localhost:3001) in your browser!
 ---
 
 ### 3. Health & Network Check
-* **URL**: `/api/health`
-* **Method**: `GET`
+
+- **URL**: `/api/health`
+- **Method**: `GET`
 
 **Response (`200 OK`):**
+
 ```json
 {
   "status": "healthy",
@@ -186,11 +199,11 @@ Open [http://localhost:3001](http://localhost:3001) in your browser!
 
 ## 🛠️ CLI Utilities
 
-* **Check testnet wallet balance:**
+- **Check testnet wallet balance:**
   ```bash
   npm run check-balance
   ```
-* **Send a test payment on Sepolia:**
+- **Send a test payment on Sepolia:**
   ```bash
   npm run send-payment
   ```
@@ -212,6 +225,7 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for full architectural ration
 ## ☁️ Deployment (Render / Railway)
 
 ### Deploying to Render.com in 3 minutes:
+
 1. Push this repository to your GitHub account.
 2. Log into [Render.com](https://render.com/) and click **New + > Web Service**.
 3. Select this repository.

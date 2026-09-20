@@ -5,4 +5,4 @@
  * Preserves compatibility with existing deployment environments (Render, Railway, etc.).
  */
 
-require('./src/server');
+require("./src/server");

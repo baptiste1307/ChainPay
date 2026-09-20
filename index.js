@@ -1,4 +1,4 @@
 /**
  * Backward compatibility wrapper for checkBalance script.
  */
-require('./scripts/checkBalance');
+require("./scripts/checkBalance");

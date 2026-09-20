@@ -10,8 +10,8 @@
  *    structured results rather than letting unhandled RPC exceptions crash the system.
  */
 
-const { ethers } = require('ethers');
-const config = require('../config');
+const { ethers } = require("ethers");
+const config = require("../config");
 
 class PaymentService {
   constructor() {
@@ -28,18 +28,18 @@ class PaymentService {
       const network = await this.provider.getNetwork();
       const blockNumber = await this.provider.getBlockNumber();
       return {
-        status: 'healthy',
+        status: "healthy",
         network: config.networkName,
         chainId: Number(network.chainId),
         currentBlock: blockNumber,
-        defaultRecipient: config.defaultRecipient
+        defaultRecipient: config.defaultRecipient,
       };
     } catch (err) {
       return {
-        status: 'degraded',
+        status: "degraded",
         network: config.networkName,
         error: err.message,
-        defaultRecipient: config.defaultRecipient
+        defaultRecipient: config.defaultRecipient,
       };
     }
   }
@@ -62,16 +62,29 @@ class PaymentService {
    */
   async verifyPayment({ txHash, amount, to }) {
     // 1. Syntactic parameter validation
-    if (!txHash || typeof txHash !== 'string' || !/^0x[a-fA-F0-9]{64}$/.test(txHash)) {
-      throw new Error('Invalid transaction hash format. Expected 64-character hex string starting with 0x.');
+    if (
+      !txHash ||
+      typeof txHash !== "string" ||
+      !/^0x[a-fA-F0-9]{64}$/.test(txHash)
+    ) {
+      throw new Error(
+        "Invalid transaction hash format. Expected 64-character hex string starting with 0x.",
+      );
     }
 
-    if (amount === undefined || amount === null || isNaN(Number(amount)) || Number(amount) <= 0) {
-      throw new Error('Invalid amount. Must be a positive numeric value in ETH.');
+    if (
+      amount === undefined ||
+      amount === null ||
+      isNaN(Number(amount)) ||
+      Number(amount) <= 0
+    ) {
+      throw new Error(
+        "Invalid amount. Must be a positive numeric value in ETH.",
+      );
     }
 
     if (!to || !ethers.isAddress(to)) {
-      throw new Error('Invalid recipient address format.');
+      throw new Error("Invalid recipient address format.");
     }
 
     // 2. Query JSON-RPC for transaction data
@@ -79,7 +92,8 @@ class PaymentService {
     if (!tx) {
       return {
         success: false,
-        message: 'Transaction not found on chain. It may still be propagating through the mempool.'
+        message:
+          "Transaction not found on chain. It may still be propagating through the mempool.",
       };
     }
 
@@ -90,7 +104,7 @@ class PaymentService {
     if (actualTo !== expectedTo) {
       return {
         success: false,
-        message: `Recipient mismatch. Expected: ${expectedTo}, Actual: ${actualTo}`
+        message: `Recipient mismatch. Expected: ${expectedTo}, Actual: ${actualTo}`,
       };
     }
 
@@ -101,21 +115,26 @@ class PaymentService {
       const actualEth = ethers.formatEther(tx.value);
       return {
         success: false,
-        message: `Insufficient payment amount. Expected: ${amount} ETH, Received: ${actualEth} ETH`
+        message: `Insufficient payment amount. Expected: ${amount} ETH, Received: ${actualEth} ETH`,
       };
     }
 
     // 5. Await block inclusion and receipt
-    const receipt = await this.provider.waitForTransaction(txHash, config.confirmationsRequired);
+    const receipt = await this.provider.waitForTransaction(
+      txHash,
+      config.confirmationsRequired,
+    );
     if (!receipt || receipt.status === 0) {
       return {
         success: false,
-        message: 'Transaction was reverted on-chain by the EVM.'
+        message: "Transaction was reverted on-chain by the EVM.",
       };
     }
 
     // 6. Record payment in the ledger (prevent duplicate records for same hash)
-    const existingIndex = this.payments.findIndex(p => p.txHash.toLowerCase() === txHash.toLowerCase());
+    const existingIndex = this.payments.findIndex(
+      (p) => p.txHash.toLowerCase() === txHash.toLowerCase(),
+    );
     const paymentRecord = {
       txHash,
       from: tx.from,
@@ -124,7 +143,7 @@ class PaymentService {
       blockNumber: receipt.blockNumber,
       confirmations: receipt.confirmations,
       timestamp: new Date().toISOString(),
-      status: 'confirmed'
+      status: "confirmed",
     };
 
     if (existingIndex >= 0) {
@@ -135,8 +154,8 @@ class PaymentService {
 
     return {
       success: true,
-      message: 'Payment verified and confirmed on-chain.',
-      payment: paymentRecord
+      message: "Payment verified and confirmed on-chain.",
+      payment: paymentRecord,
     };
   }
 }

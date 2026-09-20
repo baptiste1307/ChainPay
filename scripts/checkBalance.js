@@ -3,12 +3,12 @@
  * Queries the JSON-RPC provider to inspect wallet balance and network connectivity.
  */
 
-const { ethers } = require('ethers');
-const config = require('../src/config');
+const { ethers } = require("ethers");
+const config = require("../src/config");
 
 async function main() {
   if (!config.privateKey) {
-    console.error('❌ Error: PRIVATE_KEY is not defined in your .env file.');
+    console.error("❌ Error: PRIVATE_KEY is not defined in your .env file.");
     process.exit(1);
   }
 
@@ -18,14 +18,16 @@ async function main() {
     const balance = await provider.getBalance(wallet.address);
     const network = await provider.getNetwork();
 
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log('  🔍 ChainPay — Wallet Inspector');
-    console.log(`  🌐 Network: ${config.networkName} (Chain ID: ${network.chainId})`);
+    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+    console.log("  🔍 ChainPay — Wallet Inspector");
+    console.log(
+      `  🌐 Network: ${config.networkName} (Chain ID: ${network.chainId})`,
+    );
     console.log(`  💼 Wallet Address: ${wallet.address}`);
     console.log(`  💰 Available Balance: ${ethers.formatEther(balance)} ETH`);
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
   } catch (error) {
-    console.error('❌ Error querying wallet balance:', error.message);
+    console.error("❌ Error querying wallet balance:", error.message);
     process.exit(1);
   }
 }
