@@ -1,9 +1,11 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const { ethers } = require('ethers');
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
@@ -37,4 +39,5 @@ app.get('/payments', (req, res) => {
     res.send(payments);
 });
 
-app.listen(3001, () => console.log("Backend listening on port 3001"));
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => console.log(`Backend listening on port ${PORT}`));
