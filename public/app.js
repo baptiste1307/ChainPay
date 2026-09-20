@@ -43,21 +43,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) throw new Error("Health check failed");
       const data = await res.json();
 
-      networkNameEl.textContent = data.network || "EVM Connected";
-      statNetworkEl.textContent = data.network || "EVM Testnet";
-      statBlockEl.textContent = data.currentBlock
-        ? `#${data.currentBlock}`
-        : "Ready";
+      if (networkNameEl) networkNameEl.textContent = data.network || "Sepolia";
 
-      if (data.defaultRecipient) {
+      if (data.defaultRecipient && merchantAddressInput && verifyTo) {
         activeMerchant = data.defaultRecipient;
         merchantAddressInput.value = activeMerchant;
         verifyTo.value = activeMerchant;
       }
     } catch (err) {
-      console.warn("Network health fetch error:", err.message);
-      networkNameEl.textContent = "EVM Standby";
-      statBlockEl.textContent = "Offline";
+      if (networkNameEl) networkNameEl.textContent = "Sepolia (Connecting...)";
     }
   }
 
@@ -68,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) throw new Error("Failed to fetch payments");
       const payments = await res.json();
 
-      statPaymentsCountEl.textContent = payments.length;
+      if (statPaymentsCountEl) statPaymentsCountEl.textContent = payments.length;
 
       if (!payments || payments.length === 0) {
         paymentsTableBody.innerHTML = `
