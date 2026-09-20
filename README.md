@@ -16,10 +16,6 @@
   <a href="#-who-is-chainpay-for">Use Cases</a>
 </p>
 
-<p align="center">
-  <a href="docs/API_REFERENCE.md">📖 Detailed API Reference</a> •
-  <a href="docs/ARCHITECTURE.md">🏗️ Architecture Design</a>
-</p>
 
 <p align="center">
   <a href="https://chainpay-xhl0.onrender.com" target="_blank">
