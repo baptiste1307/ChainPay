@@ -32,9 +32,6 @@
 
 ---
 
-> [!NOTE]
-> **Testnet Demonstration**: By default, this live deployment and repository operate on the **Ethereum Sepolia Testnet** using free test tokens. No real funds or real currency are involved or required.
-
 ## ⚡ Key Features & Technical Highlights
 
 ChainPay is an open-source, non-custodial payment gateway engineered for Ethereum and EVM-compatible networks (Base, Polygon, Arbitrum, Optimism).
