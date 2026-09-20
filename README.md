@@ -7,18 +7,18 @@
 </p>
 
 <p align="center">
-  <a href="#-key-features--technical-highlights">Features & Tech</a> •
-  <a href="#-prerequisites">Prerequisites</a> •
-  <a href="#-quick-start-local">Quick Start</a> •
-  <a href="#-deploy-online-in-3-minutes-free">Deploy Online</a> •
-  <a href="#%EF%B8%8F-web-dashboard-tour">Web Dashboard</a> •
-  <a href="#-api-reference">API Docs</a> •
-  <a href="#-who-is-chainpay-for">Use Cases</a>
+  <a href="#key-features--technical-highlights">Features & Tech</a> •
+  <a href="#prerequisites">Prerequisites</a> •
+  <a href="#quick-start-local">Quick Start</a> •
+  <a href="#deploy-online-in-3-minutes-free">Deploy Online</a> •
+  <a href="#web-dashboard-tour">Web Dashboard</a> •
+  <a href="#api-reference">API Docs</a> •
+  <a >Use Cases</a>
 </p>
 
 <p align="center">
   <a href="https://chainpay-xhl0.onrender.com" target="_blank">
-    <img src="https://img.shields.io/badge/🚀_Live_Demo-chainpay--xhl0.onrender.com-00DC82?style=for-the-badge&logo=render&logoColor=white" alt="Live Demo on Render" />
+    <img src="https://img.shields.io/badge/Live_Demo-chainpay--xhl0.onrender.com-00DC82?style=for-the-badge&logo=render&logoColor=white" alt="Live Demo on Render" />
   </a>
 </p>
 
@@ -39,7 +39,7 @@
 > [!NOTE]
 > **Testnet Demonstration**: By default, this live deployment and repository operate on the **Ethereum Sepolia Testnet** using free test tokens. No real funds or real currency are involved or required.
 
-## ⚡ Key Features & Technical Highlights
+## Key Features & Technical Highlights
 
 ChainPay is an open-source, non-custodial payment gateway engineered for Ethereum and EVM-compatible networks (Base, Polygon, Arbitrum, Optimism).
 
@@ -67,7 +67,7 @@ Payment & Verification Architecture:
 
 ---
 
-## 🧰 Prerequisites
+## Prerequisites
 
 You do not need any real money to test and run ChainPay! Everything runs on the **Sepolia EVM testnet** using free test tokens.
 
@@ -80,7 +80,7 @@ You do not need any real money to test and run ChainPay! Everything runs on the 
 
 ---
 
-## 🚦 Quick Start (Local)
+## Quick Start (Local)
 
 ### 1. Clone & Install
 
@@ -125,7 +125,7 @@ Open your browser at **[http://localhost:3001](http://localhost:3001)** to see t
 
 ---
 
-## 🌐 Deploy Online in 3 Minutes (Free)
+## Deploy Online in 3 Minutes (Free)
 
 > **You do NOT need to keep this running only on your computer!**  
 > Anyone on the internet can test your live Web3 payment dashboard by deploying it to a free cloud hosting provider like [Render](https://render.com/).
@@ -152,7 +152,7 @@ Render will build and serve your app with a free HTTPS URL: **[https://chainpay-
 
 ---
 
-## 🖥️ Web Dashboard Tour
+## Web Dashboard Tour
 
 When navigating to the dashboard, users and merchants have access to:
 
@@ -163,7 +163,7 @@ When navigating to the dashboard, users and merchants have access to:
 
 ---
 
-## 📡 API Reference
+## API Reference
 
 ### 1. Verify Payment
 
@@ -209,16 +209,6 @@ When navigating to the dashboard, users and merchants have access to:
 
 ---
 
-## 💡 Why ChainPay? Who is this for?
-
-| Target Audience                  | Why They Care                                                                                                            |
-| :------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
-| **Indie Hackers & Solo SaaS**    | Want to accept payments worldwide without opening a registered company or paying 3% Stripe fees.                         |
-| **P2P Creators & Donors**        | Free, open-source alternative to "Buy Me a Coffee" or Patreon with zero platform cuts.                                   |
-| **Web3 Developers & Recruiters** | Clean, production-grade example of Ethers.js v6, JSON-RPC queries, precision math, and Ousterhout software architecture. |
-
----
-
-## 📄 License
+## License
 
 Distributed under the MIT License. Built with ❤️ by [baptiste1307](https://github.com/baptiste1307).
