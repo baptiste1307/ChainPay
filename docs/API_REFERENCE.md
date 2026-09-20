@@ -8,7 +8,7 @@ CORS is enabled by default across all origins.
 ## Base URLs
 
 - Local: `http://localhost:3001`
-- Production: `https://your-domain.onrender.com`
+- Production: `https://chainpay-xhl0.onrender.com`
 
 ---
 
