@@ -30,7 +30,14 @@
   <img src="https://img.shields.io/badge/License-MIT-black?style=flat-square" alt="License" />
 </p>
 
+<p align="center">
+  <img src="public/assets/chainpay-preview.png" alt="ChainPay Live Web3 Payment Gateway & Verification Dashboard" width="640" />
+</p>
+
 ---
+
+> [!NOTE]
+> **Testnet Demonstration**: By default, this live deployment and repository operate on the **Ethereum Sepolia Testnet** using free test tokens. No real funds or real currency are involved or required.
 
 ## ⚡ Key Features & Technical Highlights
 
@@ -153,10 +160,6 @@ When navigating to the dashboard, users and merchants have access to:
 2. **1-Click MetaMask Checkout**: Preset amount chips (0.001 ETH, 0.005 ETH, etc.) and instant transaction broadcast via window.ethereum.
 3. **Automatic Inspector**: Automatically fills the transaction hash upon broadcast and queries the verification endpoint.
 4. **Settled Payments Ledger**: Real-time table displaying recent payments with timestamps, block numbers, and direct links to Sepolia Etherscan.
-
----
-
-> 📖 _For full design rationale on Deep Modules, error design, and classitis prevention, see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)._
 
 ---
 
